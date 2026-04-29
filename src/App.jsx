@@ -130,7 +130,7 @@ const GlobalStyle = `
 // 1. 学生仪表板
 // ============================================
 function StudentDashboard({ student, onSelectTask }) {
-  const [tasks, setTasks] = useState([
+  const [tasks] = useState([
     {
       id: 1,
       subject: '📐 数学',
