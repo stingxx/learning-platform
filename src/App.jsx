@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-<<<<<<< HEAD
 export default function LearningPlatform() {
   // ================== 状态管理 ==================
   
@@ -12,10 +11,10 @@ export default function LearningPlatform() {
   const [currentUser, setCurrentUser] = useState(null);
   
   // 页面状态
-  const [currentView, setCurrentView] = useState('auth'); // auth, home, curriculum, lesson, exercise
+  const [currentView, setCurrentView] = useState('auth');
   
   // 认证表单状态
-  const [authMode, setAuthMode] = useState('login'); // login 或 register
+  const [authMode, setAuthMode] = useState('login');
   const [authForm, setAuthForm] = useState({
     name: '',
     email: '',
@@ -43,57 +42,6 @@ export default function LearningPlatform() {
     if (!authForm.name || !authForm.email || !authForm.password || !authForm.grade) {
       setError('请填写所有字段');
       return;
-=======
-// ============================================
-// 1. 学生仪表板
-// ============================================
-function StudentDashboard({ student, onSelectTask }) {
-  const [tasks] = useState([
-    {
-      id: 1,
-      subject: '📐 数学',
-      topic: '二次方程',
-      description: '学习如何解二次方程和因式分解',
-      status: 'completed',
-      duration: '15分钟',
-      accuracy: 92
-    },
-    {
-      id: 2,
-      subject: '🔬 科学',
-      topic: '细胞分裂',
-      description: '理解有丝分裂和减数分裂过程',
-      status: 'in-progress',
-      duration: '20分钟',
-      accuracy: null
-    },
-    {
-      id: 3,
-      subject: '📚 文学',
-      topic: '莎士比亚作品分析',
-      description: '分析哈姆雷特中的关键主题',
-      status: 'not-started',
-      duration: '18分钟',
-      accuracy: null
-    },
-    {
-      id: 4,
-      subject: '🧮 数学',
-      topic: '统计学基础',
-      description: '平均数、中位数和众数',
-      status: 'not-started',
-      duration: '12分钟',
-      accuracy: null
-    },
-    {
-      id: 5,
-      subject: '🌍 社科',
-      topic: '工业革命',
-      description: '从手工业到机器生产',
-      status: 'not-started',
-      duration: '16分钟',
-      accuracy: null
->>>>>>> 396e0d7ef39dfed51b8ce9073275c00139bff2b9
     }
 
     setIsLoading(true);
@@ -118,7 +66,6 @@ function StudentDashboard({ student, onSelectTask }) {
         return;
       }
 
-      // 注册成功，自动登录
       setAuthToken(data.token);
       setCurrentUser({
         id: data.user_id,
@@ -185,8 +132,6 @@ function StudentDashboard({ student, onSelectTask }) {
     setAuthForm({ name: '', email: '', password: '', grade: '6' });
   };
 
-  // ================== 课程相关 ==================
-
   const loadCurriculum = async () => {
     if (!authToken) return;
 
@@ -245,8 +190,6 @@ function StudentDashboard({ student, onSelectTask }) {
       setIsLoading(false);
     }
   };
-
-  // ================== 练习相关 ==================
 
   const generateExercise = async () => {
     if (!authToken || !selectedTopic) {
@@ -319,10 +262,8 @@ function StudentDashboard({ student, onSelectTask }) {
         return;
       }
 
-      // 显示反馈
       setExerciseFeedback(data);
       
-      // 更新进度
       setProgress(prev => ({
         ...prev,
         total_points: data.total_points,
@@ -334,8 +275,6 @@ function StudentDashboard({ student, onSelectTask }) {
       setIsLoading(false);
     }
   };
-
-  // ================== 进度相关 ==================
 
   const loadProgress = async () => {
     if (!authToken) return;
@@ -354,8 +293,6 @@ function StudentDashboard({ student, onSelectTask }) {
     }
   };
 
-  // ================== 副作用 ==================
-
   useEffect(() => {
     if (isLoggedIn && currentView === 'home') {
       loadCurriculum();
@@ -363,9 +300,6 @@ function StudentDashboard({ student, onSelectTask }) {
     }
   }, [isLoggedIn, currentView]);
 
-  // ================== 渲染 ==================
-
-  // ========== 认证页面 ==========
   if (!isLoggedIn) {
     return (
       <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px', fontFamily: 'Arial' }}>
@@ -492,18 +426,10 @@ function StudentDashboard({ student, onSelectTask }) {
         >
           {isLoading ? '处理中...' : (authMode === 'login' ? '登录' : '注册')}
         </button>
-
-        <div style={{ marginTop: '20px', padding: '10px', background: '#f0f0f0', borderRadius: '5px', fontSize: '12px' }}>
-          <p><strong>测试账户:</strong></p>
-          <p>邮箱: test@example.com</p>
-          <p>密码: test123</p>
-          <p>年级: 6</p>
-        </div>
       </div>
     );
   }
 
-  // ========== 主页 ==========
   if (currentView === 'home') {
     return (
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px', fontFamily: 'Arial' }}>
@@ -568,9 +494,8 @@ function StudentDashboard({ student, onSelectTask }) {
     );
   }
 
-  // ========== 课程页面 ==========
   if (currentView === 'curriculum') {
-    const topics = curriculum[selectedSubject === 'MATH' ? '数学' : selectedSubject === 'SCIENCE' ? '科学' : '文学'] || [];
+    const topics = ['分数', '小数', '百分比', '代数基础', '几何基础'];
 
     return (
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px', fontFamily: 'Arial' }}>
@@ -582,12 +507,6 @@ function StudentDashboard({ student, onSelectTask }) {
         </button>
 
         <h2>{selectedSubject === 'MATH' ? '数学' : selectedSubject === 'SCIENCE' ? '科学' : '文学'} 课程</h2>
-
-        {error && (
-          <div style={{ background: '#fee', color: '#c33', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-            {error}
-          </div>
-        )}
 
         <div style={{ marginBottom: '20px' }}>
           <h3>选择主题:</h3>
@@ -649,7 +568,6 @@ function StudentDashboard({ student, onSelectTask }) {
     );
   }
 
-  // ========== 课程内容页面 ==========
   if (currentView === 'lesson' && currentLesson) {
     return (
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px', fontFamily: 'Arial' }}>
@@ -681,22 +599,6 @@ function StudentDashboard({ student, onSelectTask }) {
           {currentLesson.content}
         </div>
 
-        <div style={{ background: '#f8f9fa', padding: '15px', borderRadius: '8px', marginBottom: '20px' }}>
-          <h3>关键概念</h3>
-          {currentLesson.key_concepts.map((concept, idx) => (
-            <div key={idx} style={{ marginBottom: '15px', paddingBottom: '10px', borderBottom: '1px solid #ddd' }}>
-              <h4 style={{ color: '#667eea' }}>{concept.term}</h4>
-              <p><strong>定义:</strong> {concept.definition}</p>
-              <p><strong>例子:</strong> {concept.example}</p>
-            </div>
-          ))}
-        </div>
-
-        <div style={{ background: '#e8f5e9', padding: '15px', borderRadius: '8px', marginBottom: '20px' }}>
-          <h3>总结</h3>
-          <p>{currentLesson.summary}</p>
-        </div>
-
         <button
           onClick={generateExercise}
           style={{
@@ -715,7 +617,6 @@ function StudentDashboard({ student, onSelectTask }) {
     );
   }
 
-  // ========== 练习页面 ==========
   if (currentView === 'exercise' && currentExercise) {
     return (
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', fontFamily: 'Arial' }}>
@@ -731,8 +632,7 @@ function StudentDashboard({ student, onSelectTask }) {
           ← 返回选题
         </button>
 
-        <h2>练习题 #{currentExercise.exercise_id.slice(0, 8)}</h2>
-        <p style={{ color: '#666' }}>难度: {currentExercise.difficulty}</p>
+        <h2>练习题</h2>
 
         <div style={{ background: '#f8f9fa', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
           <h3>题目</h3>
@@ -743,7 +643,7 @@ function StudentDashboard({ student, onSelectTask }) {
               <h4>选择你的答案:</h4>
               <div style={{ display: 'grid', gap: '10px' }}>
                 {currentExercise.options.map((option, idx) => {
-                  const letter = String.fromCharCode(65 + idx); // A, B, C, D
+                  const letter = String.fromCharCode(65 + idx);
                   const isSelected = exerciseAnswer === letter;
                   return (
                     <button
@@ -819,33 +719,6 @@ function StudentDashboard({ student, onSelectTask }) {
             </h3>
             <p><strong>得分:</strong> {exerciseFeedback.score}分</p>
             
-            {!exerciseFeedback.is_correct && (
-              <div>
-                <p><strong>正确答案:</strong> {exerciseFeedback.correct_answer}</p>
-              </div>
-            )}
-            
-            <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid rgba(0,0,0,0.2)' }}>
-              <p><strong>讲解:</strong></p>
-              <p>{exerciseFeedback.explanation}</p>
-            </div>
-
-            {exerciseFeedback.tips && exerciseFeedback.tips.length > 0 && (
-              <div style={{ marginTop: '15px' }}>
-                <p><strong>💡 学习提示:</strong></p>
-                <ul style={{ paddingLeft: '20px' }}>
-                  {exerciseFeedback.tips.map((tip, idx) => (
-                    <li key={idx}>{tip}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid rgba(0,0,0,0.2)', fontSize: '14px' }}>
-              <p>📊 你的总积分: <strong>{exerciseFeedback.total_points}</strong></p>
-              <p>📝 完成练习: <strong>{exerciseFeedback.total_exercises_completed}</strong></p>
-            </div>
-
             <button
               onClick={() => {
                 setCurrentExercise(null);
@@ -874,99 +747,3 @@ function StudentDashboard({ student, onSelectTask }) {
 
   return null;
 }
-<<<<<<< HEAD
-=======
-
-// ============================================
-// 4. 主应用程序
-// ============================================
-export default function LearningPlatformApp() {
-  const [currentView, setCurrentView] = useState('dashboard');
-  const [selectedTaskId, setSelectedTaskId] = useState(null);
-  const [student] = useState({
-    id: 'student_001',
-    name: '李明',
-    grade: 9,
-    streak: 7,
-    totalPoints: 1250
-  });
-
-  const handleSelectTask = (taskId) => {
-    setSelectedTaskId(taskId);
-    setCurrentView('lesson');
-  };
-
-  //const handleLessonComplete = () => {
-  //  setCurrentView('exercise');
- // };
-
-  const handleExerciseComplete = (accuracy) => {
-    console.log(`课程完成！准确率：${accuracy}%`);
-    setCurrentView('dashboard');
-    setSelectedTaskId(null);
-  };
-
-  const handleBack = () => {
-    setCurrentView('dashboard');
-    setSelectedTaskId(null);
-  };
-
-  return (
-    <>
-      {currentView === 'dashboard' && (
-        <StudentDashboard student={student} onSelectTask={handleSelectTask} />
-      )}
-      
-      {currentView === 'lesson' && (
-        <LessonViewer 
-          taskId={selectedTaskId} 
-          onBack={handleBack}
-        />
-      )}
-
-      {currentView === 'exercise' && (
-        <ExerciseInterface
-          taskId={selectedTaskId}
-          onBack={handleBack}
-          onComplete={handleExerciseComplete}
-        />
-      )}
-    </>
-  );
-}
-
-// ============================================
-// 如何使用此代码：
-// ============================================
-/*
-1. 创建新的React应用：
-   npx create-react-app learning-platform
-   cd learning-platform
-
-2. 替换 src/App.js 的内容为此文件
-
-3. 启动应用：
-   npm start
-
-4. 应用会在 http://localhost:3000 打开
-
-5. 集成真实API：
-   - 在 StudentDashboard 中，替换 useState 为实际的 fetch() 调用
-   - 连接到你的后端 API
-   - 传递真实的学生数据和任务列表
-
-示例API集成：
-```javascript
-useEffect(() => {
-  fetch(`/api/daily-tasks/${student.id}`)
-    .then(res => res.json())
-    .then(data => setTasks(data))
-    .catch(err => console.error(err));
-}, [student.id]);
-```
-
-6. 生产环境部署：
-   npm run build
-   # 上传 build/ 文件夹到你的托管服务（Vercel, Netlify等）
-*/
->>>>>>> 396e0d7ef39dfed51b8ce9073275c00139bff2b9
