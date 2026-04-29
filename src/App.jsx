@@ -690,9 +690,9 @@ export default function LearningPlatformApp() {
     setCurrentView('lesson');
   };
 
-  const handleLessonComplete = () => {
-    setCurrentView('exercise');
-  };
+  //const handleLessonComplete = () => {
+  //  setCurrentView('exercise');
+ // };
 
   const handleExerciseComplete = (accuracy) => {
     console.log(`课程完成！准确率：${accuracy}%`);
