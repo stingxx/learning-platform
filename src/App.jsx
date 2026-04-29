@@ -25,7 +25,7 @@ export default function LearningPlatform() {
   // 学习状态
   const [selectedSubject, setSelectedSubject] = useState('MATH');
   const [selectedTopic, setSelectedTopic] = useState('');
-  const [curriculum, setCurriculum] = useState({});
+  const [, setCurriculum] = useState({});
   const [currentLesson, setCurrentLesson] = useState(null);
   const [currentExercise, setCurrentExercise] = useState(null);
   const [exerciseAnswer, setExerciseAnswer] = useState('');
@@ -294,11 +294,11 @@ export default function LearningPlatform() {
   };
 
   useEffect(() => {
-    if (isLoggedIn && currentView === 'home') {
-      loadCurriculum();
-      loadProgress();
-    }
-  }, [isLoggedIn, currentView]);
+  if (isLoggedIn && currentView === 'home') {
+    loadCurriculum();
+    loadProgress();
+  }
+}, [isLoggedIn, currentView, loadCurriculum, loadProgress]);
 
   if (!isLoggedIn) {
     return (
